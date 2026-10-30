@@ -1,0 +1,862 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap');
+
+/* =========================
+   VARIABLES Y BASE
+========================= */
+
+:root {
+    --paper: #f7f4ed;
+    --ink: #222c26;
+    --muted: #777b70;
+    --green: #245d48;
+    --green-dark: #194634;
+    --lime: #d5e6a5;
+    --line: #e4e0d6;
+    --card: #fffefa;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+}
+
+button {
+    font-family: inherit;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================= */
+
+.app-shell {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 10px;
+}
+
+/* =========================
+   ENCABEZADO
+========================= */
+
+.topbar {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.brand {
+    flex-shrink: 0;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.brand-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin-right: 8px;
+    border-radius: 9px;
+    background: var(--green);
+    color: var(--lime);
+    font-size: 20px;
+}
+
+.brand-dot {
+    color: #9dbd69;
+}
+
+.top-note {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-align: right;
+}
+
+/* =========================
+   PANEL DE CONFIGURACIÓN
+========================= */
+
+.panel {
+    width: 100%;
+    margin-top: 8px;
+    padding: 22px 20px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--card);
+    box-shadow: 0 8px 30px #243a2408;
+}
+
+.field-label {
+    margin-bottom: 12px;
+    color: #777d70;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+}
+
+.category-label {
+    margin-top: 22px;
+}
+
+/* =========================
+   NIVELES
+========================= */
+
+.level-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.level-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 125px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--card);
+    text-align: left;
+    cursor: pointer;
+    transition:
+        border-color .18s,
+        background .18s,
+        transform .18s;
+}
+
+.level-card:hover,
+.category-card:hover {
+    transform: translateY(-2px);
+    border-color: #a7b99b;
+}
+
+.level-card.selected,
+.category-card.selected {
+    border: 1.5px solid var(--green);
+    background: #f5f8ef;
+}
+
+.level-grid {
+    display: grid;
+    width: 40px;
+    height: 35px;
+    gap: 3px;
+    margin-bottom: 9px;
+}
+
+.grid-2,
+.grid-3,
+.grid-4 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.level-grid i {
+    display: block;
+    border-radius: 2px;
+    background: #e7e7dd;
+}
+
+.selected .level-grid i {
+    background: #b9d1a2;
+}
+
+.level-name,
+.category-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.level-meta,
+.category-desc {
+    margin-top: 4px;
+    color: #828579;
+    font-size: 11px;
+}
+
+.level-check {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: none;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    font-size: 11px;
+}
+
+.selected .level-check {
+    display: flex;
+}
+
+/* =========================
+   CATEGORÍAS
+========================= */
+
+.category-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.category-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding: 9px 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--card);
+    text-align: left;
+    cursor: pointer;
+    transition:
+        border-color .18s,
+        background .18s,
+        transform .18s;
+}
+
+.category-art {
+    display: flex;
+    height: 66px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    overflow: hidden;
+    border-radius: 8px;
+    font-size: 23px;
+}
+
+.art-one {
+    background: #e6edd7;
+    color: #467554;
+}
+
+.art-one span:nth-child(2) {
+    color: #d28d62;
+    font-size: 34px;
+    transform: translateY(-7px);
+}
+
+.art-one span:nth-child(3) {
+    color: #668a54;
+    transform: translateY(8px);
+}
+
+.art-two {
+    background: #f0e3d2;
+    color: #a76f43;
+}
+
+.art-two span:nth-child(2) {
+    color: #526f87;
+    font-size: 34px;
+    transform: translateY(7px);
+}
+
+.art-two span:nth-child(3) {
+    color: #d29b62;
+    transform: translateY(-7px);
+}
+
+.art-three {
+    background: #e1e8f0;
+    color: #637da4;
+}
+
+.art-three span:nth-child(2) {
+    color: #d68e86;
+    font-size: 33px;
+    transform: translateY(-7px);
+}
+
+.art-three span:nth-child(3) {
+    color: #718f7c;
+    transform: translateY(8px);
+}
+
+.category-desc {
+    min-height: 16px;
+    padding-right: 3px;
+    line-height: 1.4;
+}
+
+.category-radio {
+    position: absolute;
+    right: 8px;
+    bottom: 10px;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #c6c9bc;
+    border-radius: 50%;
+}
+
+.selected .category-radio {
+    border: 5px solid var(--green);
+}
+
+/* =========================
+   BOTÓN COMENZAR
+========================= */
+
+.start-button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 14px 17px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--green);
+    color: var(--card);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.start-button:hover {
+    background: var(--green-dark);
+}
+
+.start-button span {
+    color: var(--lime);
+    font-size: 20px;
+}
+
+/* =========================
+   SECCIÓN DE JUEGO
+========================= */
+
+.game-section {
+    width: 100%;
+    padding-top: 8px;
+}
+
+/* =========================
+   ESTADÍSTICAS
+========================= */
+
+.stats {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--card);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-right: 18px;
+    padding-right: 18px;
+    border-right: 1px solid var(--line);
+}
+
+.stat-label {
+    color: #8c9285;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .8px;
+}
+
+.stat strong {
+    font-size: 21px;
+    letter-spacing: -.5px;
+}
+
+.stat strong small {
+    color: #898e82;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.text-button {
+    padding: 8px 0;
+    border: 0;
+    background: transparent;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.restart-button {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    place-items: center;
+    margin-left: auto;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--card);
+    color: var(--green);
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* =========================
+   TABLERO
+   Seis columnas y ancho completo
+========================= */
+
+.board-wrap {
+    width: 100%;
+    height: calc(100dvh - 185px);
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.board {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(var(--rows, 2), minmax(0, 1fr));
+
+    gap: clamp(3px, 0.7vw, 8px);
+}
+
+/* =========================
+   TARJETAS
+========================= */
+
+.memory-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: auto;
+
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+
+    background: var(--green);
+    box-shadow: 0 2px 0 #153d2b;
+    cursor: pointer;
+}
+
+.memory-card .back-face,
+.memory-card .front-face {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+
+    transition: opacity .2s ease;
+}
+
+.memory-card .back-face {
+    z-index: 2;
+    opacity: 1;
+
+    background: linear-gradient(145deg, #2c6a52, #1d4d3b);
+    color: #c4d9a3;
+
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(11px, 2.5vw, 23px);
+    font-weight: 500;
+}
+
+.memory-card .front-face {
+    z-index: 1;
+    padding: clamp(2px, 0.5vw, 6px);
+
+    opacity: 0;
+    background: var(--card);
+}
+
+.memory-card .front-face img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.memory-card.flipped .back-face,
+.memory-card.matched .back-face {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.memory-card.flipped .front-face,
+.memory-card.matched .front-face {
+    z-index: 3;
+    opacity: 1;
+}
+
+.memory-card.flipped {
+    box-shadow: 0 2px 0 #d7d8cc;
+}
+
+.memory-card.matched {
+    box-shadow: 0 0 0 2px #b7cd9d;
+    cursor: default;
+}
+
+/* =========================
+   MENSAJE DE VICTORIA
+========================= */
+
+.win-message {
+    max-width: 500px;
+    margin: 16px auto 24px;
+    padding: 24px;
+    border-radius: 16px;
+    background: #edf3e2;
+    text-align: center;
+}
+
+.win-icon {
+    color: var(--green);
+    font-size: 30px;
+}
+
+.win-message h3 {
+    margin: 7px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+}
+
+.win-message p {
+    color: #73796b;
+    font-size: 13px;
+}
+
+.win-message .start-button {
+    max-width: 260px;
+    margin: 16px auto 0;
+}
+
+/* =========================
+   PIE DE PÁGINA
+========================= */
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 4px;
+    padding: 16px 0 20px;
+    color: #96998d;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .8px;
+}
+
+footer span:last-child {
+    text-align: right;
+}
+
+/* =========================
+   ACCESIBILIDAD
+========================= */
+
+.level-card:focus-visible,
+.category-card:focus-visible,
+.start-button:focus-visible,
+.text-button:focus-visible,
+.restart-button:focus-visible,
+.memory-card:focus-visible {
+    outline: 3px solid #d3a76b;
+    outline-offset: 2px;
+}
+
+/* =========================
+   TABLETS Y CELULARES
+========================= */
+
+@media (max-width: 650px) {
+    .app-shell {
+        padding: 0 5px;
+    }
+
+    .topbar {
+        min-height: 52px;
+        gap: 6px;
+    }
+
+    .brand {
+        font-size: 19px;
+    }
+
+    .brand-mark {
+        width: 25px;
+        height: 25px;
+        margin-right: 4px;
+        font-size: 17px;
+    }
+
+    .top-note {
+        font-size: 7px;
+        letter-spacing: .3px;
+    }
+
+    .panel {
+        margin-top: 5px;
+        padding: 14px 7px;
+        border-radius: 13px;
+    }
+
+    .field-label {
+        margin-bottom: 8px;
+        font-size: 9px;
+        letter-spacing: .5px;
+    }
+
+    .category-label {
+        margin-top: 14px;
+    }
+
+    .level-options,
+    .category-options {
+        gap: 5px;
+    }
+
+    .level-card {
+        min-height: 105px;
+        padding: 7px;
+        border-radius: 9px;
+    }
+
+    .level-grid {
+        width: 32px;
+        height: 29px;
+        gap: 2px;
+        margin-bottom: 6px;
+    }
+
+    .level-name,
+    .category-name {
+        font-size: 11px;
+    }
+
+    .level-meta,
+    .category-desc {
+        margin-top: 3px;
+        font-size: 9px;
+    }
+
+    .level-check {
+        top: 5px;
+        right: 5px;
+        width: 15px;
+        height: 15px;
+        font-size: 9px;
+    }
+
+    .category-card {
+        padding: 5px 5px 9px;
+        border-radius: 9px;
+    }
+
+    .category-art {
+        height: 43px;
+        gap: 4px;
+        margin-bottom: 6px;
+        font-size: 18px;
+    }
+
+    .art-one span:nth-child(2),
+    .art-two span:nth-child(2),
+    .art-three span:nth-child(2) {
+        font-size: 25px;
+    }
+
+    .category-radio {
+        right: 5px;
+        bottom: 7px;
+        width: 12px;
+        height: 12px;
+    }
+
+    .selected .category-radio {
+        border-width: 4px;
+    }
+
+    .start-button {
+        margin-top: 12px;
+        padding: 11px 12px;
+        font-size: 12px;
+    }
+
+    .game-section {
+        padding-top: 5px;
+    }
+
+    .stats {
+        margin-bottom: 7px;
+        padding: 7px 5px;
+        border-radius: 9px;
+    }
+
+    .stat {
+        gap: 3px;
+        margin-right: 7px;
+        padding-right: 7px;
+    }
+
+    .stat-label {
+        font-size: 7px;
+        letter-spacing: 0;
+    }
+
+    .stat strong {
+        font-size: 16px;
+    }
+
+    .stat strong small {
+        font-size: 10px;
+    }
+
+    .text-button {
+        padding: 6px 2px;
+        font-size: 9px;
+    }
+
+    .restart-button {
+        width: 29px;
+        height: 29px;
+        font-size: 18px;
+    }
+
+    .board {
+        gap: 3px;
+    }
+
+    .memory-card {
+        border-radius: 5px;
+    }
+
+    .memory-card .front-face {
+        padding: 2px;
+    }
+
+    .memory-card .back-face {
+        font-size: clamp(10px, 3vw, 18px);
+    }
+
+    .win-message {
+        margin: 10px auto;
+        padding: 16px;
+    }
+
+    .win-message h3 {
+        font-size: 25px;
+    }
+
+    footer {
+        padding: 9px 0 12px;
+        font-size: 7px;
+        letter-spacing: .2px;
+    }
+}
+
+/* =========================
+   PANTALLAS DE POCA ALTURA
+========================= */
+
+@media (max-height: 750px) {
+    .topbar {
+        min-height: 46px;
+    }
+
+    .panel {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .category-label {
+        margin-top: 12px;
+    }
+
+    .category-art {
+        height: 45px;
+    }
+
+    .start-button {
+        margin-top: 12px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .game-section {
+        padding-top: 4px;
+    }
+
+    .stats {
+        margin-bottom: 6px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    footer {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+}
+
+/* =========================
+   MOVIMIENTO REDUCIDO
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

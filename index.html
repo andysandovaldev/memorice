@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f4ed" />
+    <title>Memorice — juega y encuentra las parejas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#inicio" aria-label="Memorice, inicio"
+          ><span class="brand-mark">✳</span> memorice<span class="brand-dot"
+            >.</span
+          ></a
+        >
+        <span class="top-note">UN JUEGO PARA ENTRENAR LA MEMORIA</span>
+      </header>
+
+      <section class="setup panel" id="setup" aria-labelledby="setup-title">
+        <div
+          class="level-options"
+          role="group"
+          aria-label="Nivel de dificultad"
+        >
+          <button
+            class="level-card selected"
+            data-cols="6"
+            data-rows="2"
+            aria-pressed="true"
+          >
+            <span class="level-grid mini-grid grid-2">
+              <i></i><i></i><i></i><i></i><i></i><i></i> <i></i><i></i><i></i
+              ><i></i><i></i><i></i>
+            </span>
+            <span class="level-name">Fácil</span>
+            <span class="level-meta">6 × 2 · 12 tarjetas</span>
+            <span class="level-check">✓</span>
+          </button>
+
+          <button
+            class="level-card"
+            data-cols="6"
+            data-rows="3"
+            aria-pressed="false"
+          >
+            <span class="level-grid mini-grid grid-3">
+              <i></i><i></i><i></i><i></i><i></i><i></i> <i></i><i></i><i></i
+              ><i></i><i></i><i></i> <i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+            <span class="level-name">Intermedio</span>
+            <span class="level-meta">6 × 3 · 18 tarjetas</span>
+            <span class="level-check">✓</span>
+          </button>
+
+          <button
+            class="level-card"
+            data-cols="6"
+            data-rows="4"
+            aria-pressed="false"
+          >
+            <span class="level-grid mini-grid grid-4">
+              <i></i><i></i><i></i><i></i><i></i><i></i> <i></i><i></i><i></i
+              ><i></i><i></i><i></i> <i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+            <span class="level-name">Experto</span>
+            <span class="level-meta">6 × 4 · 24 tarjetas</span>
+            <span class="level-check">✓</span>
+          </button>
+        </div>
+        <div class="field-label category-label">
+          ELIGE UNA CATEGORÍA DE IMÁGENES
+        </div>
+        <div
+          class="category-options"
+          role="group"
+          aria-label="Categoría de imágenes"
+        >
+          <button
+            class="category-card selected"
+            data-category="categoria-1"
+            aria-pressed="true"
+          >
+            <span class="category-art art-one"
+              ><span>✿</span><span>✦</span><span>❋</span></span
+            ><span class="category-name">Categoría 1</span
+            ><span class="category-desc">Naturaleza y colores</span
+            ><span class="category-radio"></span>
+          </button>
+          <!-- <button
+            class="category-card"
+            data-category="categoria-2"
+            aria-pressed="false"
+          >
+            <span class="category-art art-two"
+              ><span>◒</span><span>✧</span><span>◈</span></span
+            ><span class="category-name">Categoría 2</span
+            ><span class="category-desc">Formas y objetos</span
+            ><span class="category-radio"></span>
+          </button> -->
+          <!-- <button
+            class="category-card"
+            data-category="categoria-3"
+            aria-pressed="false"
+          >
+            <span class="category-art art-three"
+              ><span>☼</span><span>♡</span><span>✳</span></span
+            ><span class="category-name">Categoría 3</span
+            ><span class="category-desc">Un mundo por descubrir</span
+            ><span class="category-radio"></span>
+          </button> -->
+        </div>
+        <button class="start-button" id="start-game">
+          Comenzar a jugar <span>↗</span>
+        </button>
+      </section>
+
+      <section
+        class="game-section hidden"
+        id="game"
+        aria-labelledby="game-title"
+      >
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">MOVIMIENTOS</span
+            ><strong id="moves">0</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">PAREJAS</span
+            ><strong id="pairs">0 <small>/ 4</small></strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">TIEMPO</span
+            ><strong id="timer">00:00</strong>
+          </div>
+          <button class="text-button" id="change-settings">
+            Cambiar opciones
+          </button>
+          <button
+            class="restart-button"
+            id="restart"
+            aria-label="Reiniciar partida"
+          >
+            ↻
+          </button>
+        </div>
+        <div class="board-wrap">
+          <div class="board" id="board" aria-label="Tablero de memorice"></div>
+        </div>
+        <div class="win-message hidden" id="win-message">
+          <span class="win-icon">✦</span>
+          <h3>¡Memoria brillante!</h3>
+          <p id="win-summary">Encontraste todas las parejas.</p>
+          <button class="start-button" id="play-again">
+            Jugar de nuevo <span>↗</span>
+          </button>
+        </div>
+      </section>
+      <footer>
+        <span>MEMORICE <span class="brand-dot">●</span></span
+        ><span>Primera Iglesia Bautista de Temuco</span>
+      </footer>
+    </main>
+    <script src="images.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
